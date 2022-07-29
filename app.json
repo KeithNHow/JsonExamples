@@ -1,0 +1,29 @@
+{
+  "id": "516ba67b-875c-4559-90fb-d5c6506624cc",
+  "name": "Json Examples",
+  "publisher": "Neuways",
+  "version": "1.0.0.0",
+  "brief": "Json Examples",
+  "description": "Json Examples",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "19.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "8.0"
+}

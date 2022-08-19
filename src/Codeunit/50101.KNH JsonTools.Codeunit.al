@@ -1,7 +1,7 @@
 /// <summary>
-/// Codeunit JsonTools (ID 50001).
+/// Codeunit JsonTools (ID 51000).
 /// </summary>
-codeunit 50101 "KNH JsonTools"
+codeunit 51000 "KNH JsonTools"
 {
     /// <summary>
     /// Json2Rec.

@@ -8,8 +8,8 @@ permissionset 51000 "KNH JsonTools"
     Permissions =
         codeunit "KNH JsonTools" = X,
         codeunit "KNH API Test" = X,
-        tabledata "KNH API Test" = RIMD,
-        table "KNH API Test" = X,
-        page "KNH API Test" = X,
+        tabledata "KNH API Sample" = RIMD,
+        table "KNH API Sample" = X,
+        page "KNH API Sample" = X,
         page "KNH IP Address" = X;
 }

@@ -9,7 +9,7 @@ codeunit 51001 "KNH API Test"
     /// <param name="txtresponse">Text.</param>
     procedure GetAPIToken(txtresponse: Text) //receive response
     var
-        TestAPI: Record "KNH API Test";
+        TestAPI: Record "KNH API Sample";
         jsObject: JsonObject;
         jsValue: JsonValue;
         jsToken: JsonToken;
@@ -28,9 +28,9 @@ codeunit 51001 "KNH API Test"
                 TestAPI.Init();
                 TestAPI.ID := RecCount;
                 foreach jsKey in jsObject.Keys() do begin //loop for each field in json object
-                    if jsKey = 'accesstoken' then //if field = access token
-                        TestAPI.AccessToken := CopyStr(jsValue.AsText(), 1, 100);
-                    if jsKey = 'expires_in' then //if field = expires in
+                    if jsKey = 'accesstoken' then //if field key = access token
+                        TestAPI.AccessToken := CopyStr(jsValue.AsText(), 1, 100); //Get json value 
+                    if jsKey = 'expires_in' then //if field key = expires in
                         TestAPI.ExpiresIn := CopyStr(jsValue.AsText(), 1, 20);
                 end;
                 TestAPI.Insert();
@@ -39,7 +39,7 @@ codeunit 51001 "KNH API Test"
     end;
 
     /// <summary>
-    /// ReadJSON.
+    /// ReadJSON - using Json Management codeunit. 
     /// </summary>
     /// <param name="JsonObjectText">Text.</param>
     procedure ReadJSON(JsonObjectText: Text) //5459

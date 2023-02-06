@@ -1,5 +1,6 @@
 /// <summary>
 /// Page KNH IP Address (ID 51001).
+/// Pop field with IP Address by calling GetIP func
 /// </summary>
 page 51001 "KNH IP Address"
 {
@@ -27,21 +28,17 @@ page 51001 "KNH IP Address"
         Client: HttpClient;
         Response: HttpResponseMessage;
         JsObject: JsonObject;
-        ResponseTxt: Text;
-    begin
-        if Client.Get('https:://api.ipify.org?format=json', Response) then
-            if Response.IsSuccessStatusCode() then begin
-                Response.Content().ReadAs(ResponseTxt); //Gets the contents of the http response and reads it in text field
-                JsObject.ReadFrom(ResponseTxt); //Read json data into json object
-                exit(GetJsonTextField(JsObject, 'ip'));
-            end;
-    end;
-
-    local procedure GetJsonTextfield(JObject: JsonObject; Member: Text): Text
-    var
+        JObject: JsonObject;
         Result: JsonToken;
+        ResponseTxt: Text;
+        Member: Text;
     begin
-        if JObject.Get(Member, Result) then //Retrieves the value of a property with a given key from a json object
-            exit(Result.AsValue().AsText()); //Converts the value in a json token to a json value
+        if Client.Get('https:://api.ipify.org?format=json', Response) then //Get Response from path
+            if Response.IsSuccessStatusCode() then begin
+                Response.Content().ReadAs(ResponseTxt); //Gets the contents of http response into text object 
+                JsObject.ReadFrom(ResponseTxt); //Reads text into json object
+                if JObject.Get(Member, Result) then //Retrieves value using field key from json object and places in json token
+                    exit(Result.AsValue().AsText()); //Converts the value in a json token into text object
+            end;
     end;
 }

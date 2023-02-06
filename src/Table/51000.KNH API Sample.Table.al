@@ -1,9 +1,9 @@
 /// <summary>
-/// Table KNH API Test (ID 51000).
+/// Table KNH API Sample (ID 51000).
 /// </summary>
-table 51000 "KNH API Test"
+table 51000 "KNH API Sample"
 {
-    Caption = 'KNH API Test';
+    Caption = 'KNH API Sample';
     DataClassification = ToBeClassified;
 
     fields

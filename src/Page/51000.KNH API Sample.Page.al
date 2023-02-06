@@ -1,12 +1,12 @@
 /// <summary>
-/// Page KNH API Test (ID 51000).
+/// Page KNH API Sample (ID 51000).
 /// </summary>
-page 51000 "KNH API Test"
+page 51000 "KNH API Sample"
 {
     ApplicationArea = All;
-    Caption = 'KNH API Test';
+    Caption = 'KNH API Sample';
     PageType = List;
-    SourceTable = "KNH API Test";
+    SourceTable = "KNH API Sample";
     UsageCategory = Lists;
     RefreshOnActivate = true;
 
@@ -53,6 +53,7 @@ page 51000 "KNH API Test"
                     KNHApiTest: Codeunit "KNH API Test";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
+                    WebClient: HttpClient;
                     Response: Text;
                 begin
                     WebHeaders := WebClient.DefaultRequestHeaders; //Gets request headers which should be sent with each request
@@ -61,14 +62,10 @@ page 51000 "KNH API Test"
                     WebHeaders.Add('Authorization', 'Auth2');
                     if WebClient.Get('URL', HttpResponseMsg) then begin //Sends request to get http response
                         httpResponseMsg.Content.ReadAs(Response); //Gets content of http response
-                        KNHApiTest.GetAPIToken(Response);
+                        KNHApiTest.GetAPIToken(Response); //Call CU 
                     end;
                 end;
             }
         }
     }
-
-    var
-        webClient: HttpClient;
-
 }

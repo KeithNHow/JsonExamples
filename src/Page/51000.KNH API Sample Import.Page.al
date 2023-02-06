@@ -1,7 +1,7 @@
 /// <summary>
 /// Page KNH API Sample (ID 51000).
 /// </summary>
-page 51000 "KNH API Sample"
+page 51000 "KNH API Sample Import"
 {
     ApplicationArea = All;
     Caption = 'KNH API Sample';
@@ -50,7 +50,7 @@ page 51000 "KNH API Sample"
 
                 trigger OnAction()
                 var
-                    KNHApiTest: Codeunit "KNH API Test";
+                    KNHApiTest: Codeunit "KNH API Sample Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;

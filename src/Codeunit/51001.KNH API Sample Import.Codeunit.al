@@ -1,7 +1,7 @@
 /// <summary>
-/// Codeunit KNH API Test (ID 51001).
+/// Codeunit KNH API Sample Import (D 51001).
 /// </summary>
-codeunit 51001 "KNH API Test"
+codeunit 51001 "KNH API Sample Import"
 {
     /// <summary>
     /// GetAPIToken.

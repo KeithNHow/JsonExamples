@@ -52,16 +52,16 @@ page 51000 "KNH API Test"
                 var
                     KNHApiTest: Codeunit "KNH API Test";
                     WebHeaders: HttpHeaders;
-                    httpResponseMsg: HttpResponseMessage;
+                    HttpResponseMsg: HttpResponseMessage;
                     Response: Text;
                 begin
-                    WebHeaders := WebClient.DefaultRequestHeaders;
-                    WebHeaders.Add('Username', '   ');
+                    WebHeaders := WebClient.DefaultRequestHeaders; //Gets request headers which should be sent with each request
+                    WebHeaders.Add('Username', '   '); //Adds spec header and its value 
                     WebHeaders.Add('Password', '   ');
                     WebHeaders.Add('Authorization', 'Auth2');
-                    if WebClient.Get('URL', httpResponseMsg) then begin
-                        httpResponseMsg.Content.ReadAs(Response); //Get response
-                        KNHApiTest.GetAPIToken(Response); //Send response
+                    if WebClient.Get('URL', HttpResponseMsg) then begin //Sends request to get http response
+                        httpResponseMsg.Content.ReadAs(Response); //Gets content of http response
+                        KNHApiTest.GetAPIToken(Response);
                     end;
                 end;
             }

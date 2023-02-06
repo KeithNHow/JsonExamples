@@ -37,11 +37,11 @@ page 51001 "KNH IP Address"
             end;
     end;
 
-    local procedure GetJsonTextfield(O: JsonObject; Member: Text): Text
+    local procedure GetJsonTextfield(JObject: JsonObject; Member: Text): Text
     var
         Result: JsonToken;
     begin
-        if O.Get(Member, Result) then //Retrieves the value of a property with a given key from a json object
+        if JObject.Get(Member, Result) then //Retrieves the value of a property with a given key from a json object
             exit(Result.AsValue().AsText()); //Converts the value in a json token to a json value
     end;
 }

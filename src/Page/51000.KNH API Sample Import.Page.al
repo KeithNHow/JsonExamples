@@ -50,7 +50,7 @@ page 51000 "KNH API Sample Import"
 
                 trigger OnAction()
                 var
-                    KNHApiTest: Codeunit "KNH API Sample Import";
+                    KNHApiTest: Codeunit "KNH API Sample Loop Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;

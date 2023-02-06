@@ -1,7 +1,7 @@
 {
   "id": "516ba67b-875c-4559-90fb-d5c6506624cc",
   "name": "Json Examples",
-  "publisher": "Neuways",
+  "publisher": "Keith How",
   "version": "1.0.0.0",
   "brief": "Json Examples",
   "description": "Json Examples",
@@ -13,7 +13,7 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "19.0.0.0",
+  "application": "20.0.0.0",
   "idRanges": [
     {
       "from": 51000,
@@ -22,8 +22,8 @@
   ],
   "resourceExposurePolicy": {
     "allowDebugging": true,
-    "allowDownloadingSource": false,
-    "includeSourceInSymbolFile": false
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
   },
-  "runtime": "8.0"
+  "runtime": "9.0"
 }

@@ -9,7 +9,7 @@
 /// FieldRef - References a field in a table.
 /// FieldType - References the type of a table field
 /// </summary>
-codeunit 51000 "KNH JsonTools"
+codeunit 51000 "KNH_JsonTools"
 {
     /// <summary>
     /// Json2Rec.

@@ -1,7 +1,7 @@
 /// <summary>
 /// Table KNH API Sample (ID 51000).
 /// </summary>
-table 51000 "KNH API Sample"
+table 51000 "KNH_API_Sample"
 {
     Caption = 'KNH API Sample';
     DataClassification = ToBeClassified;

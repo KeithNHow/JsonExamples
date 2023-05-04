@@ -2,7 +2,7 @@
 /// Page KNH IP Address (ID 51001).
 /// Pop field with IP Address by calling GetIP func
 /// </summary>
-page 51001 "KNH IP Address"
+page 51001 "KNH_IP_Address"
 {
     Caption = 'What is my IP Address';
     PageType = Card;

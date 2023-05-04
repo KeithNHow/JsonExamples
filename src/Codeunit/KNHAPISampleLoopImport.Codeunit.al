@@ -1,7 +1,7 @@
 /// <summary>
 /// Codeunit KNH API Sample Loop Import (D 51001).
 /// </summary>
-codeunit 51001 "KNH API Sample Loop Import"
+codeunit 51001 "KNH_API_Sample_Loop_Import"
 {
     /// <summary>
     /// GetAPIToken.
@@ -9,7 +9,7 @@ codeunit 51001 "KNH API Sample Loop Import"
     /// <param name="txtresponse">Text.</param>
     procedure GetAPIToken(txtresponse: Text) //receive response
     var
-        TestAPI: Record "KNH API Sample";
+        TestAPI: Record "KNH_API_Sample";
         jsObject: JsonObject;
         jsValue: JsonValue;
         jsToken: JsonToken;

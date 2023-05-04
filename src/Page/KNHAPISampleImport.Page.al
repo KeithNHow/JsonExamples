@@ -1,12 +1,12 @@
 /// <summary>
-/// Page KNH API Sample (ID 51000).
+/// Page "KNH API Sample Import" (ID 51000).
 /// </summary>
-page 51000 "KNH API Sample Import"
+page 51000 "KNH_API_Sample_Import"
 {
     ApplicationArea = All;
     Caption = 'KNH API Sample';
     PageType = List;
-    SourceTable = "KNH API Sample";
+    SourceTable = "KNH_API_Sample";
     UsageCategory = Lists;
     RefreshOnActivate = true;
 
@@ -50,7 +50,7 @@ page 51000 "KNH API Sample Import"
 
                 trigger OnAction()
                 var
-                    KNHApiTest: Codeunit "KNH API Sample Loop Import";
+                    KNHApiTest: Codeunit "KNH_API_Sample_Loop_Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;

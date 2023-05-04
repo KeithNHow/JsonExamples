@@ -25,17 +25,17 @@ page 51001 "KNH_IP_Address"
 
     local procedure GetIP(): Text
     var
-        Client: HttpClient;
-        Response: HttpResponseMessage;
+        HttpClient: HttpClient;
+        HttpResponseMessage: HttpResponseMessage;
         JsObject: JsonObject;
         JObject: JsonObject;
         Result: JsonToken;
         ResponseTxt: Text;
         Member: Text;
     begin
-        if Client.Get('https:://api.ipify.org?format=json', Response) then //Get Response from path
-            if Response.IsSuccessStatusCode() then begin
-                Response.Content().ReadAs(ResponseTxt); //Gets the contents of http response into text object 
+        if HttpClient.Get('https:://api.ipify.org?format=json', HttpResponseMessage) then //Get Response from path
+            if HttpResponseMessage.IsSuccessStatusCode() then begin
+                HttpResponseMessage.Content().ReadAs(ResponseTxt); //Gets the contents of http response into text object 
                 JsObject.ReadFrom(ResponseTxt); //Reads text into json object
                 if JObject.Get(Member, Result) then //Retrieves value using field key from json object and places in json token
                     exit(Result.AsValue().AsText()); //Converts the value in a json token into text object

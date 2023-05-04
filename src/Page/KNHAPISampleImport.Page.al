@@ -50,7 +50,7 @@ page 51000 "KNH_API_Sample_Import"
 
                 trigger OnAction()
                 var
-                    KNHApiTest: Codeunit "KNH_API_Sample_Loop_Import";
+                    APISampleLoopImport: Codeunit "KNH_API_Sample_Loop_Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;
@@ -61,8 +61,8 @@ page 51000 "KNH_API_Sample_Import"
                     WebHeaders.Add('Password', '   ');
                     WebHeaders.Add('Authorization', 'Auth2');
                     if WebClient.Get('URL', HttpResponseMsg) then begin //Sends request to get http response
-                        httpResponseMsg.Content.ReadAs(Response); //Gets content of http response
-                        KNHApiTest.GetAPIToken(Response); //Call CU 
+                        HttpResponseMsg.Content.ReadAs(Response); //Gets content of http response
+                        APISampleLoopImport.GetAPIToken(Response); //Call CU 
                     end;
                 end;
             }

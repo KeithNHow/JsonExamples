@@ -15,14 +15,14 @@ codeunit 51000 "KNH_JsonTools"
     /// Json2Rec.
     /// </summary>
     /// <param name="jsObject">JsonObject.</param>
-    /// <param name="rec">Variant.</param>
+    /// <param name="variantrec">Variant.</param>
     /// <returns>Return value of type Variant.</returns>
-    procedure Json2Rec(jsObject: JsonObject; rec: Variant): Variant //rec json obj and variant rec and return variant
+    procedure Json2Rec(jsObject: JsonObject; variantrec: Variant): Variant //rec json obj and variant rec and return variant
     var
-        recRef: RecordRef;
+        recordRef: RecordRef;
     begin
-        recRef.GetTable(rec);
-        exit(Json2Rec(jsObject, recRef.Number())); //return variant
+        recordRef.GetTable(variantrec);
+        exit(Json2Rec(jsObject, recordRef.Number())); //return variant
     end;
 
     /// <summary>
@@ -33,8 +33,8 @@ codeunit 51000 "KNH_JsonTools"
     /// <returns>Return value of type Variant.</returns>
     procedure Json2Rec(JsObject: JsonObject; TableNo: Integer): Variant //recive json object and table no, return variant
     var
-        recRef: RecordRef;
-        fdRef: FieldRef;
+        recordRef: RecordRef;
+        fieldRef: FieldRef;
         fieldHash: Dictionary of [Text, Integer];
         jsToken: JsonToken;
         jsValue: JsonValue;
@@ -42,78 +42,78 @@ codeunit 51000 "KNH_JsonTools"
         jsKey: Text;
         i: Integer;
     begin
-        recRef.Open(TableNo);
-        for i := 1 to recRef.FieldCount() do begin //loop for each field in ref record
-            fdRef := recRef.FieldIndex(i);
-            fieldHash.Add(GetJsonFieldName(fdRef), fdRef.Number);
+        recordRef.Open(TableNo);
+        for i := 1 to recordRef.FieldCount() do begin //loop for each field in ref record
+            fieldRef := recordRef.FieldIndex(i);
+            fieldHash.Add(GetJsonFieldName(fieldRef), fieldRef.Number);
         end;
-        recRef.Init();
+        recordRef.Init();
         foreach jsKey in jsObject.Keys() do //loop for each field in json object
             if jsObject.Get(jsKey, jstoken) then //place field in token 
                 if jsToken.IsValue() then begin //check token has value
                     jsValue := jstoken.AsValue(); //converts value in json token to json value
-                    fdRef := recRef.Field(fieldHash.Get(jsKey)); //place key value in field ref
-                    AssignValueToFieldRef(fdRef, jsValue); //convert json value to field ref
+                    fieldRef := recordRef.Field(fieldHash.Get(jsKey)); //place key value in field ref
+                    AssignValueToFieldRef(fieldRef, jsValue); //convert json value to field ref
                 end;
-        recVariant := recRef;
+        recVariant := recordRef;
         exit(recVariant); //return variant 
     end;
 
     /// <summary>
     /// Rec2Json.
     /// </summary>
-    /// <param name="Rec">Variant.</param>
+    /// <param name="variantRec">Variant.</param>
     /// <returns>Return value of type JsonObject.</returns>
-    procedure Rec2Json(Rec: Variant): JsonObject //receive variant value and return json object
+    procedure Rec2Json(variantRec: Variant): JsonObject //receive variant value and return json object
     var
-        recRef: RecordRef;
-        fdRef: FieldRef;
+        recordRef: RecordRef;
+        fieldRef: FieldRef;
         jsObject: JsonObject;
         i: Integer;
     begin
-        if not Rec.IsRecord then
+        if not variantRec.IsRecord then
             Error('Parameter Rec is not a record');
-        recRef.GetTable(Rec);
-        for i := 1 to recRef.FieldCount() do begin //loop for each field
-            fdRef := recRef.FieldIndex(i);
-            case fdRef.Class of
-                fdRef.Class::Normal:
-                    jsObject.Add(GetJsonFieldName(fdRef), FieldRef2JsonValue(fdRef)); //add jsValue with key
-                fdRef.Class::FlowField:
+        recordRef.GetTable(variantRec);
+        for i := 1 to recordRef.FieldCount() do begin //loop for each field
+            fieldRef := recordRef.FieldIndex(i);
+            case fieldRef.Class of
+                fieldRef.Class::Normal:
+                    jsObject.Add(GetJsonFieldName(fieldRef), FieldRef2JsonValue(fieldRef)); //add jsValue with key
+                fieldRef.Class::FlowField:
                     begin
-                        fdRef.CalcField();
-                        jsObject.Add(GetJsonFieldName(fdRef), FieldRef2JsonValue(fdRef)); //add jsValue with key
+                        fieldRef.CalcField();
+                        jsObject.Add(GetJsonFieldName(fieldRef), FieldRef2JsonValue(fieldRef)); //add jsValue with key
                     end;
             end;
         end;
         exit(jsObject);
     end;
 
-    local procedure FieldRef2JsonValue(fdRef: FieldRef): JsonValue //receive var and return json value
+    local procedure FieldRef2JsonValue(fieldRef: FieldRef): JsonValue //receive var and return json value
     var
         jsValue: JsonValue;
         jsDate: Date;
         jsDateTime: DateTime;
         jsTime: Time;
     begin
-        case fdRef.Type() of
+        case fieldRef.Type() of
             FieldType::Date:
                 begin
-                    jsDate := fdRef.Value; //place value in date var
+                    jsDate := fieldRef.Value; //place value in date var
                     jsValue.SetValue(jsDate); //convert to json value
                 end;
             FieldType::Time:
                 begin
-                    jsTime := fdRef.Value; //place value in time var
+                    jsTime := fieldRef.Value; //place value in time var
                     jsValue.SetValue(jsTime); //convert to json value
                 end;
             FieldType::DateTime:
                 begin
-                    jsDateTime := fdRef.Value; //place value in datetime var
+                    jsDateTime := fieldRef.Value; //place value in datetime var
                     jsValue.SetValue(jsDateTime); //convert to json value
                 end;
             else
-                jsValue.SetValue(Format(fdRef.Value, 0, 9)); //place value in json value by formatting to to text
+                jsValue.SetValue(Format(fieldRef.Value, 0, 9)); //place value in json value by formatting to to text
         end;
         exit(jsValue);
     end;
@@ -156,7 +156,7 @@ codeunit 51000 "KNH_JsonTools"
         Customer: Record Customer;
         ShipToAddress: Record "Ship-to Address";
         ArrayJSONManagement: Codeunit "Json Management";
-        JsonManagaement: Codeunit "Json Management";
+        Json_Managaement: Codeunit "Json Management";
         ObjectJsonManagement: Codeunit "Json management";
         i: Integer;
         CodeText: Text;
@@ -164,9 +164,9 @@ codeunit 51000 "KNH_JsonTools"
         JsonArrayText: Text;
         ShipToJsonObject: Text;
     begin
-        JsonManagaement.InitializeObject(JsonObjectText);
-        if JsonManagaement.GetArrayPropertyValueAsStringByName('Customer', CustomerJsonObject) then begin
-            JsonManagaement.InitializeObject(CustomerJsonObject);
+        Json_Managaement.InitializeObject(JsonObjectText);
+        if Json_Managaement.GetArrayPropertyValueAsStringByName('Customer', CustomerJsonObject) then begin
+            Json_Managaement.InitializeObject(CustomerJsonObject);
 
             Customer.Init();
             ObjectJsonManagement.GetStringPropertyValueByName('No', CodeText);
@@ -175,7 +175,7 @@ codeunit 51000 "KNH_JsonTools"
             Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."Address")));
             Customer.Insert();
 
-            JsonManagaement.InitializeObject(CustomerJsonObject);
+            Json_Managaement.InitializeObject(CustomerJsonObject);
             if ObjectJsonManagement.GetStringPropertyValueByName('Ship-to', JsonArrayText) then begin
                 ObjectJsonManagement.InitializeCollection(JsonArrayText);
                 for i := 1 to ArrayJsonManagement.GetCollectionCount() do begin

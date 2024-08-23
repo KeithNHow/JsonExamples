@@ -1,15 +1,12 @@
-/// <summary>
-/// Unknown KNH Json Examples (ID 51000). 
-/// </summary>
-permissionset 51000 "KNH_JsonExamples"
+permissionset 51000 "KNH Json Examples"
 {
     Assignable = true;
     Caption = 'Json Tools', MaxLength = 30;
     Permissions =
-        codeunit "KNH_JsonTools" = X,
-        codeunit "KNH_API_Sample_Loop_Import" = X,
-        tabledata "KNH_API_Sample" = RIMD,
-        table "KNH_API_Sample" = X,
-        page "KNH_API_Sample_Import" = X,
-        page "KNH_IP_Address" = X;
+        codeunit "KNH Json Management" = X,
+        codeunit "KNH Json Sample Loop Import" = X,
+        tabledata "KNH Sample API" = RIMD,
+        table "KNH Sample API" = X,
+        page "KNH Json Sample Import" = X,
+        page "KNH Get IP Address" = X;
 }

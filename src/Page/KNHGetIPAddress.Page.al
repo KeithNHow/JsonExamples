@@ -14,7 +14,7 @@ page 51001 "KNH Get IP Address"
     {
         area(content)
         {
-            field(IP; GetIP())
+            field(IP; this.GetIP())
             {
                 ApplicationArea = All;
                 Caption = 'Current IP Address of BC Server';

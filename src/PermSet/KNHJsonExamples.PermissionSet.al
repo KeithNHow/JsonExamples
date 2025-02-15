@@ -5,8 +5,8 @@ permissionset 51000 "KNH Json Examples"
     Permissions =
         codeunit "KNH Json Management" = X,
         codeunit "KNH Json Sample Loop Import" = X,
-        tabledata "KNH Sample API" = RIMD,
-        table "KNH Sample API" = X,
+        tabledata "KNH Import File" = RIMD,
+        table "KNH Import File" = X,
         page "KNH Json Sample Import" = X,
         page "KNH Get IP Address" = X;
 }

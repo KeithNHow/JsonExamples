@@ -5,9 +5,9 @@ namespace JsonExamples;
 page 51000 "KNH Json Sample Import"
 {
     ApplicationArea = All;
-    Caption = 'API Sample Import';
+    Caption = 'Imported Records';
     PageType = List;
-    SourceTable = "KNH Sample API";
+    SourceTable = "KNH Import File";
     UsageCategory = Lists;
     RefreshOnActivate = true;
 

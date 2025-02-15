@@ -1,8 +1,8 @@
 namespace JsonExamples;
 
-table 51000 "KNH Sample API"
+table 51000 "KNH Import File"
 {
-    Caption = 'KNH API Sample';
+    Caption = 'Import File';
     DataClassification = CustomerContent;
 
     fields

@@ -6,7 +6,7 @@
 /// RecordRef - References a record in a table.
 /// FieldRef - References a field in a table.
 /// FieldType - References the type of a table field
-/// Procedures (7) - ReadJson, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
+/// Procedures (7) - ReadJson, Json2Rec, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
 
 namespace JsonExamples;
 using Microsoft.Sales.Customer;
@@ -14,7 +14,7 @@ using System.Text;
 
 codeunit 51000 "KNH Json Management"
 {
-    procedure ReadJSON(JsonObjectText: Text) //5459
+    procedure ReadJson(JsonObjectText: Text)
     var
         Customer: Record Customer; //18
         ShipToAddress: Record "Ship-to Address"; //222
@@ -61,7 +61,7 @@ codeunit 51000 "KNH Json Management"
         RecordRef: RecordRef;
     begin
         RecordRef.GetTable(VariantRec);
-        exit(Json2Rec(ResponseObject, RecordRef.Number())); //Return variant
+        exit(this.Json2Rec(ResponseObject, RecordRef.Number())); //Return variant
     end;
 
     procedure Json2Rec(ResponseObject: JsonObject; TableNo: Integer): Variant //Receive json object and table no, return variant
@@ -78,7 +78,7 @@ codeunit 51000 "KNH Json Management"
         RecordRef.Open(TableNo);
         for I := 1 to RecordRef.FieldCount() do begin //Loop for each field in ref record
             FieldRef := RecordRef.FieldIndex(i);
-            FieldHash.Add(GetJsonFieldName(fieldRef), fieldRef.Number);
+            FieldHash.Add(this.GetJsonFieldName(fieldRef), fieldRef.Number);
         end;
         RecordRef.Init();
         foreach ResponseKey in ResponseObject.Keys() do //Loop for each field in json object
@@ -86,10 +86,10 @@ codeunit 51000 "KNH Json Management"
                 if ResponseToken.IsValue() then begin //Check json token has value
                     ResponseValue := ResponseToken.AsValue(); //Convert json token to json value
                     FieldRef := RecordRef.Field(FieldHash.Get(ResponseKey)); //Place key value in fieldref
-                    AssignValueToFieldRef(fieldRef, ResponseValue); //Convert json value to fieldref
+                    this.AssignValueToFieldRef(fieldRef, ResponseValue); //Convert json value to fieldref
                 end;
         RecVariant := RecordRef;
-        exit(recVariant); //Return variant 
+        exit(RecVariant); //Return variant 
     end;
 
     procedure Rec2Json(VariantRec: Variant): JsonObject //Receive variant value and return json object

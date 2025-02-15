@@ -1,7 +1,7 @@
-/// <summary>
-/// Page KNH IP Address (ID 51001).
-/// Pop field with IP Address by calling GetIP func
-/// </summary>
+// Pop field with IP Address by calling GetIP func
+
+namespace JsonExamples;
+
 page 51001 "KNH Get IP Address"
 {
     Caption = 'What is my IP Address';

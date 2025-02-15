@@ -6,7 +6,12 @@
 /// RecordRef - References a record in a table.
 /// FieldRef - References a field in a table.
 /// FieldType - References the type of a table field
-/// Procedures (7) - ReadJson, Json2Rec, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
+/// Procedures (7) - ReadJson, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
+
+namespace JsonExamples;
+using Microsoft.Sales.Customer;
+using System.Text;
+
 codeunit 51000 "KNH Json Management"
 {
     procedure ReadJSON(JsonObjectText: Text) //5459

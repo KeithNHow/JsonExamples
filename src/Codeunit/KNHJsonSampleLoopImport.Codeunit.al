@@ -1,3 +1,5 @@
+namespace JsonExamples;
+
 codeunit 51001 "KNH Json Sample Loop Import"
 {
     procedure GetAPIToken(Txtresponse: Text) //Receive response

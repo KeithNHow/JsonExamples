@@ -1,4 +1,7 @@
-//Actions (2) - Get API data, Get API Data 2 
+// Actions (2) - Get API data, Get API Data 2 
+
+namespace JsonExamples;
+
 page 51000 "KNH Json Sample Import"
 {
     ApplicationArea = All;

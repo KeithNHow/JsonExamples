@@ -1,3 +1,5 @@
+namespace JsonExamples;
+
 table 51000 "KNH Sample API"
 {
     Caption = 'KNH API Sample';

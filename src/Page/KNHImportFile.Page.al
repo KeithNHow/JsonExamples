@@ -2,7 +2,7 @@
 
 namespace JsonExamples;
 
-page 51000 "KNH Json Sample Import"
+page 51000 "KNH Import File"
 {
     ApplicationArea = All;
     Caption = 'Imported Records';
@@ -51,13 +51,13 @@ page 51000 "KNH Json Sample Import"
 
                 trigger OnAction()
                 var
-                    KNHSampleAPILoopImport: Codeunit "KNH Json Sample Loop Import";
+                    KNHSampleAPILoopImport: Codeunit "KNH Json Loop Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;
                     Response: Text;
                 begin
-                    WebHeaders := WebClient.DefaultRequestHeaders; //Gets request headers which should be sent with each request
+                    WebHeaders := WebClient.DefaultRequestHeaders; //Gets request hdrs sent with each request
                     WebHeaders.Add('Username', '   '); //Adds spec header and its value 
                     WebHeaders.Add('Password', '   ');
                     WebHeaders.Add('Authorization', 'Auth2');

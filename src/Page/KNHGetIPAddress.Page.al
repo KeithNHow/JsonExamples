@@ -4,7 +4,7 @@ namespace JsonExamples;
 
 page 51001 "KNH Get IP Address"
 {
-    Caption = 'What is my IP Address';
+    Caption = 'Get IP Address';
     PageType = Card;
     Editable = false;
     ApplicationArea = All;

@@ -1,3 +1,7 @@
+namespace JsonExamples;
+using Microsoft.Purchases.Document;
+using Microsoft.Purchases.Comment;
+
 codeunit 51002 "KNH Import From Json"
 {
     procedure ImportPurchaseOrderFromJson()

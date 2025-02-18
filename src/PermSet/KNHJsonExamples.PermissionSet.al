@@ -8,5 +8,5 @@ permissionset 51000 "KNH Json Examples"
         tabledata "KNH Import File" = RIMD,
         table "KNH Import File" = X,
         page "KNH Import File" = X,
-        page "KNH Get IP Address" = X;
+        page "KNH Get Fact" = X;
 }

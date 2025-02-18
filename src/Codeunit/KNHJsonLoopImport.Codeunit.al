@@ -2,7 +2,7 @@ namespace JsonExamples;
 
 codeunit 51001 "KNH Json Loop Import"
 {
-    procedure GetAPIToken(Txtresponse: Text) //Receive response
+    procedure ImportRecords(Txtresponse: Text) //Receive response
     var
         KNHImportFile: Record "KNH Import File";
         ResponseObject: JsonObject;
@@ -17,12 +17,12 @@ codeunit 51001 "KNH Json Loop Import"
             RecCount := KNHImportFile.ID + 1
         else
             RecCount := 1;
-        if ResponseToken.ReadFrom(txtResponse) then //Read response into json token
-            if ResponseToken.IsObject() then begin //Check json token contains a json object
-                ResponseObject := ResponseToken.AsObject(); //Place json token in json object
+        if ResponseToken.ReadFrom(txtResponse) then //Read text into json token
+            if ResponseToken.IsObject() then begin //Check json token contains a Json object
+                ResponseObject := ResponseToken.AsObject(); //Convert json token into json object
                 KNHImportFile.Reset();
                 KNHImportFile.Init();
-                KNHImportFile.ID := RecCount; //use record count as table id
+                KNHImportFile.ID := RecCount; //Use record count as table id
                 foreach ResponseKey in ResponseObject.Keys() do begin //Loop for each field in json object
                     if ResponseKey = 'accesstoken' then //If field key = access token
                         KNHImportFile.AccessToken := CopyStr(ResponseValue.AsText(), 1, 100); //Transfer json value to record field 

@@ -1,13 +1,3 @@
-/// Variant - Represents an AL variable object. The AL variant data type can contain many AL data types.
-/// Jsonobject - Is a container for JSON object. default JsonObject contains an empty JSON object.
-/// JsonArray - Is a container for JSON array. default contains an empty JSON array.
-/// JsonToken - Is a container for JSON data. default contains the JSON value of NULL.
-/// JsonValue - Is a container for JSON value. default is set to the JSON value of NULL.
-/// RecordRef - References a record in a table.
-/// FieldRef - References a field in a table.
-/// FieldType - References the type of a table field
-/// Procedures (7) - ReadJson, Json2Rec, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
-
 namespace JsonExamples;
 using Microsoft.Sales.Customer;
 using System.Text;
@@ -106,11 +96,11 @@ codeunit 51000 "KNH Json Management"
             FieldRef := RecordRef.FieldIndex(I);
             case FieldRef.Class of
                 FieldRef.Class::Normal:
-                    SendObject.Add(GetJsonFieldName(FieldRef), FieldRef2JsonValue(FieldRef)); //Add json value with key
+                    SendObject.Add(this.GetJsonFieldName(FieldRef), this.FieldRef2JsonValue(FieldRef)); //Add json value with key
                 FieldRef.Class::FlowField:
                     begin
                         FieldRef.CalcField();
-                        SendObject.Add(GetJsonFieldName(FieldRef), FieldRef2JsonValue(FieldRef)); //Add json value with key
+                        SendObject.Add(this.GetJsonFieldName(FieldRef), this.FieldRef2JsonValue(FieldRef)); //Add json value with key
                     end;
             end;
         end;

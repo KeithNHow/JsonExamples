@@ -42,16 +42,16 @@ page 51000 "KNH Import File"
     {
         area(Processing)
         {
-            action(GetAPIData)
+            action(GetJsonDataFromWebsite)
             {
                 ApplicationArea = All;
-                Caption = 'Get Access Token';
+                Caption = 'Get Json Data From Website';
                 Image = Web;
-                ToolTip = 'Get Access Token.';
+                ToolTip = 'Get json data from website.';
 
                 trigger OnAction()
                 var
-                    KNHSampleAPILoopImport: Codeunit "KNH Json Loop Import";
+                    KNHJsonLoopImport: Codeunit "KNH Json Loop Import";
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
                     WebClient: HttpClient;
@@ -63,27 +63,38 @@ page 51000 "KNH Import File"
                     WebHeaders.Add('Authorization', 'Auth2');
                     if WebClient.Get('URL', HttpResponseMsg) then begin //Sends request to get http response
                         HttpResponseMsg.Content.ReadAs(Response); //Gets content of http response
-                        KNHSampleAPILoopImport.GetAPIToken(Response); //Call codeunit
+                        KNHJsonLoopImport.ImportRecords(Response); //Call codeunit
                     end;
                 end;
             }
-            action(ImportJsonData)
+            action(GetJsonDataFromExternalFile)
             {
                 ApplicationArea = All;
-                Caption = 'Import Records';
+                Caption = 'Get Json Data From File';
                 Image = Import;
-                ToolTip = 'Import data from external file.';
+                ToolTip = 'Import data from file containing json data.';
 
                 trigger OnAction()
                 var
-                    InStr: InStream;
-                    MyText: Text;
+                    MyInStream: InStream;
+                    MyFile: Text;
                     FromFolder: Text;
+                    FromFilter: Text;
+                    MyText: Text;
+                    Title: Text;
                 begin
-                    FromFolder := 'C:\Temp\ImportFile.json';
-                    UploadIntoStream('Import', FromFolder, '', MyText, InStr);
+                    Title := 'Upload File into Stream';
+                    UploadIntoStream(Title, FromFolder, FromFilter, MyFile, MyInStream);
+                    MyInStream.ReadText(MyText);
+                    Message(MyText);
                 end;
             }
         }
+        area(Promoted)
+        {
+            actionref(GetJsonDataFromWebsite_Ref; GetJsonDataFromWebsite) { }
+            actionref(GetJsonDataFromExternalFile_Ref; GetJsonDataFromExternalFile) { }
+        }
     }
+
 }

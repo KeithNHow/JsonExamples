@@ -16,10 +16,10 @@ codeunit 51004 "KNH Export To Json"
         PurchaseOrerJson.Add(PurchaseHeader.FieldCaption("No."), PurchaseHeader."No.");
         PurchaseOrerJson.Add(PurchaseHeader.FieldCaption("Order Date"), PurchaseHeader."Order Date");
         PurchaseOrerJson.Add(PurchaseHeader.FieldCaption("Buy-from Vendor No."), PurchaseHeader."Buy-from Vendor No.");
-        PurchaseOrerJson.Add('lines', GetPurchaseLineArray(PurchaseHeader));
+        PurchaseOrerJson.Add('lines', this.GetPurchaseLineArray(PurchaseHeader));
         Tempblob.CreateOutStream(OutStream);
         if PurchaseOrerJson.WriteTo(OutStream) then begin
-            ExportFileName := 'Purchase order' + PurchaseHeader."No." + '.json';
+            ExportFileName := 'PurchaseOrder' + PurchaseHeader."No." + '.json';
             Tempblob.CreateInStream(InStream);
             DownloadFromStream(InStream, '', '', '', ExportFileName);
         end;
@@ -45,7 +45,7 @@ codeunit 51004 "KNH Export To Json"
         PurchaseLineJson.Add(PurchaseLine.FieldCaption("No."), PurchaseLine."No.");
         PurchaseLineJson.Add(PurchaseLine.FieldCaption(Quantity), PurchaseLine.Quantity);
         if this.PurchaseCommentExist(PurchaseLine) then
-            PurchaseLineJson.Add('comment', GetPurchaseLineCommentArray(PurchaseLine));
+            PurchaseLineJson.Add('comment', this.GetPurchaseLineCommentArray(PurchaseLine));
         PurchaseLineArray.Add(PurchaseLineJson);
     end;
 
@@ -62,13 +62,13 @@ codeunit 51004 "KNH Export To Json"
             until (PurchCommentLine.Next() = 0);
     end;
 
-    local procedure ExportPurchaseLineComments(PurchaseLineComments: Record "Purch. Comment Line"; CommentLineArray: JsonArray)
+    local procedure ExportPurchaseLineComments(PurchCommentLine: Record "Purch. Comment Line"; CommentLineArray: JsonArray)
     var
-        PurchaseLineCommentJson: JsonObject;
+        PurchCommentLineJson: JsonObject;
     begin
-        PurchaseLineCommentJson.Add('comment', PurchaseLineComments.Comment);
-        PurchaseLineCommentJson.Add('date', PurchaseLineComments.Date);
-        CommentLineArray.Add(PurchaseLineCommentJson);
+        PurchCommentLineJson.Add('comment', PurchCommentLine.Comment);
+        PurchCommentLineJson.Add('date', PurchCommentLine.Date);
+        CommentLineArray.Add(PurchCommentLineJson);
     end;
 
     local procedure PurchaseCommentExist(PurchaseLine: Record "Purchase Line"): Boolean

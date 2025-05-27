@@ -5,16 +5,16 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
 {
     actions
     {
-        addafter(Release)
+        addlast(Processing)
         {
-            group(Download)
+            group(JsonExamples)
             {
-                Caption = 'Download';
-                Image = Download;
+                Caption = 'Json Examples';
+                Image = ExportFile;
 
-                action("Download Json")
+                action("Export Purchase Orders")
                 {
-                    ToolTip = 'This action is for downloading the purchase order as Json.';
+                    ToolTip = 'This action is for exporting the purchase orders as Json.';
                     ApplicationArea = All;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -24,10 +24,10 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
                     var
                         ExportToJson: Codeunit "KNH Export To Json";
                     begin
-                        ExportToJson.ExportPurchaseOrderAsJson(Rec);
+                        ExportToJson.ExportPurchOrderAsJson(Rec);
                     end;
                 }
-                action("Upload Json")
+                action("Import Purchase Orders")
                 {
                     ToolTip = 'This action is for uploading the purchase order as Json.';
                     ApplicationArea = All;
@@ -39,7 +39,7 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
                     var
                         ImportFromJson: Codeunit "KNH Import From Json";
                     begin
-                        ImportFromJson.ImportPurchaseOrderFromJson();
+                        ImportFromJson.ImportPurchaseOrderFromJsonFile();
                     end;
                 }
             }

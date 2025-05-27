@@ -1,3 +1,4 @@
+// Procedures - ReadJson, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
 namespace JsonExamples;
 using Microsoft.Sales.Customer;
 using System.Text;
@@ -17,30 +18,30 @@ codeunit 51000 "KNH Json Management"
         JsonArrayText: Text;
         ShipToJsonObject: Text;
     begin
-        GenJsonManagement.InitializeObject(JsonObjectText);
-        if GenJsonManagement.GetArrayPropertyValueAsStringByName('Customer', CustomerJsonObject) then begin
-            GenJsonManagement.InitializeObject(CustomerJsonObject);
+        GenJsonManagement.InitializeObject(JsonObjectText); //Initialize the JSON object
+        if GenJsonManagement.GetArrayPropertyValueAsStringByName('Customer', CustomerJsonObject) then begin //Get the 'Customer' array from the JSON object
+            GenJsonManagement.InitializeObject(CustomerJsonObject);  //Initialize the Customer JSON object
 
-            Customer.Init();
-            ObjectJsonManagement.GetStringPropertyValueByName('No', CodeText);
-            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."No.")));
-            ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText);
-            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."Address")));
-            Customer.Insert();
+            Customer.Init(); //Initialize the Customer record
+            ObjectJsonManagement.GetStringPropertyValueByName('No', CodeText); //Get the 'No' property from the JSON object
+            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."No."))); //Validate the 'No' field
+            ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText); //Get the 'Address' property from the JSON object
+            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."Address"))); //Validate the 'Address' field
+            Customer.Insert(); //Insert the Customer record
 
-            GenJsonManagement.InitializeObject(CustomerJsonObject);
-            if ObjectJsonManagement.GetStringPropertyValueByName('Ship-to', JsonArrayText) then begin
-                ObjectJsonManagement.InitializeCollection(JsonArrayText);
-                for I := 1 to ArrayJsonManagement.GetCollectionCount() do begin
-                    ArrayJSONManagement.GetObjectFromCollectionByIndex(ShipToJsonObject, i);
+            GenJsonManagement.InitializeObject(CustomerJsonObject); //Re-initialize the Customer JSON object to extract more properties
+            if ObjectJsonManagement.GetStringPropertyValueByName('Ship-to', JsonArrayText) then begin //Get the 'Ship-to' array from the JSON object
+                ObjectJsonManagement.InitializeCollection(JsonArrayText); //Initialize the collection from the JSON array
+                for I := 1 to ArrayJsonManagement.GetCollectionCount() do begin //Loop through each item in the collection
+                    ArrayJSONManagement.GetObjectFromCollectionByIndex(ShipToJsonObject, i); //Get the Ship-to JSON object by index
 
-                    ShipToAddress.Init();
-                    ShipToAddress.Validate("Customer No.", Customer."No.");
-                    ObjectJsonManagement.GetStringPropertyValueByName('Code', CodeText);
-                    ShipToAddress.Validate("Code", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Code)));
-                    ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText);
-                    ShipToAddress.Validate("Address", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Address)));
-                    ShipToAddress.Insert();
+                    ShipToAddress.Init(); //Initialize the Ship-to Address record
+                    ShipToAddress.Validate("Customer No.", Customer."No."); //Validate the 'Customer No.' field
+                    ObjectJsonManagement.GetStringPropertyValueByName('Code', CodeText); //Get the 'Code' property from the JSON object
+                    ShipToAddress.Validate("Code", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Code))); //Validate the 'Code' field
+                    ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText); //Get the 'Address' property from the JSON object
+                    ShipToAddress.Validate("Address", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Address))); //Validate the 'Address' field
+                    ShipToAddress.Insert(); //Insert the Ship-to Address record
                 end;
             end;
         end;

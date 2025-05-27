@@ -1,3 +1,5 @@
+# Json Examples Extension
+
 # Json Token
 Is a container for any well-formed JSON data. A default JsonToken object contains the JSON value of NULL.
 AsArray() - Converts the value in a JsonToken to a JsonArray data type.
@@ -8,9 +10,10 @@ ReadFrom(Text) - Reads the JSON data from the string into a JsonToken variable.
 ReadFrom(InStream) - Reads the JSON data from the stream into a JsonToken variable.
 
 Variant - Represents an AL variable object. The AL variant data type can contain many AL data types.
-Jsonobject - Is a container for JSON object. default JsonObject contains an empty JSON object.
-JsonArray - Is a container for JSON array. default contains an empty JSON array.
-JsonValue - Is a container for JSON value. default is set to the JSON value of NULL.
+JsonToken - is a container for well formed Json data. A default JsonToken object contains the JSON value of NULL.
+JsonObject - Is a container for well formed JSON data. A default Json Object contains an empty JSON object
+JsonArray - Is a container for well formed JSON array. A default Json array contains an empty Json Array.
+JsonValue - Is a container for well formed JSON value. A default JsonValue is set to the JSON value of NULL.
 RecordRef - References a record in a table.
 FieldRef - References a field in a table.
 FieldType - References the type of a table field

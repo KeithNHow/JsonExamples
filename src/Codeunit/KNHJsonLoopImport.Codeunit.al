@@ -17,9 +17,11 @@ codeunit 51001 "KNH Json Loop Import"
             RecCount := KNHImportFile.ID + 1
         else
             RecCount := 1;
+
         if ResponseToken.ReadFrom(txtResponse) then //Read text into json token
             if ResponseToken.IsObject() then begin //Check json token contains a Json object
                 ResponseObject := ResponseToken.AsObject(); //Convert json token into json object
+
                 KNHImportFile.Reset();
                 KNHImportFile.Init();
                 KNHImportFile.ID := RecCount; //Use record count as table id
@@ -30,8 +32,9 @@ codeunit 51001 "KNH Json Loop Import"
                         KNHImportFile.ExpiresIn := CopyStr(ResponseValue.AsText(), 1, 20); //Transfer json value to record field
                 end;
                 KNHImportFile.Insert();
-                RecCount += 1;
+                RecCount += 1
             end;
+
         if RecCount <> 0 then //Post reading of response display record count message
             Message(RecordsCountedMsg)
     end;

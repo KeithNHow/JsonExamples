@@ -5,7 +5,7 @@ using System.Utilities;
 
 codeunit 51004 "KNH Export To Json"
 {
-    procedure ExportPurchOrderAsJson(PurchaseHeader: Record "Purchase Header")
+    procedure ExportPurchOrderToJsonFile(PurchaseHeader: Record "Purchase Header")
     var
         Tempblob: Codeunit "Temp Blob";
         PurchOrderJsonObject: JsonObject;

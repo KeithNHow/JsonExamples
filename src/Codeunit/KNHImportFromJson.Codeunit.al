@@ -5,7 +5,7 @@ using Microsoft.Purchases.Comment;
 // Instream to Token, Token to Object, Orders to Array, 
 codeunit 51002 "KNH Import From Json"
 {
-    procedure ImportPurchaseOrderFromJsonFile()
+    procedure ImportPurchOrderFromJsonFile()
     var
         InputJsonToken: JsonToken;
     begin

@@ -28,7 +28,7 @@ pageextension 51000 KNHPurchaseOrderList extends "Purchase Order List"
                     Image = Import;
                     trigger OnAction()
                     var
-                        ImportFromJson: Codeunit KNHImportFromJson;
+                        ImportFromJson: Codeunit KNHImportFromJsonFile;
                     begin
                         ImportFromJson.ImportPurchOrderFromJsonFile();
                     end;

@@ -6,57 +6,53 @@ using Microsoft.Purchases.Document;
 using Microsoft.Purchases.Comment;
 
 // Instream to Token, Token to Object, Orders to Array, 
-codeunit 51002 KNHImportFromJson
+codeunit 51002 KNHImportFromJsonFile
 {
     procedure ImportPurchOrderFromJsonFile()
     var
-        InputJsonToken: JsonToken;
+        ImportToken: JsonToken;
     begin
-        this.RequestFileFromUser(InputJsonToken);
-        this.ImportPurchOrder(InputJsonToken);
+        this.RequestFileFromUser(ImportToken);
+        this.ImportPurchOrder(ImportToken);
     end;
 
-    local procedure RequestFileFromUser(InputJsonToken: JsonToken)
+    local procedure RequestFileFromUser(ImportToken: JsonToken)
     var
-        InputInStream: InStream;
-        InputFilename: Text;
+        ImportInStream: InStream;
+        ImportFilename: Text;
     begin
-        if UploadIntoStream('Select File to Import', '', '*.*|*.json', InputFilename, InputInStream) then
-            InputJsonToken.ReadFrom(InputInStream); // Read the JSON from the input stream
+        if UploadIntoStream('Select File to Import', '', '*.*|*.json', ImportFilename, ImportInStream) then
+            ImportToken.ReadFrom(ImportInStream); // Read the JSON data from the inport stream into a JSON token
     end;
 
-    local procedure ImportPurchOrder(InputJsonToken: JsonToken)
+    local procedure ImportPurchOrder(ImportToken: JsonToken)
     var
         PurchaseHeader: Record "Purchase Header";
-        OrderJsonObject: JsonObject; //
-        OrderArrayJsonToken: JsonToken; // Token to hold the array of orders
-        OrderJsonToken: JsonToken; // Token to hold the order data
+        OrderObject: JsonObject;
+        OrderArray: JsonArray;
+        OrderToken: JsonToken;
     begin
-        if InputJsonToken.IsObject then begin // if the input is a JSON object
-            OrderJsonObject := InputJsonToken.AsObject(); // Get the JSON object from the input token
-            if OrderJsonObject.Contains('Orders') then begin // Check if the JSON object contains 'Orders'
-                OrderJsonObject.Get('Orders', OrderJsonToken); // Get the orders from the JSON object
-                foreach OrderJsonToken in OrderArrayJsonToken.AsArray() do begin // Iterate through each order in the JSON array
-                    OrderJsonObject := OrderJsonToken.AsObject(); // Convert the token to a JSON object
-                    Clear(PurchaseHeader);
-                    if this.CreatePurchHeader(OrderJsonObject, PurchaseHeader) then
-                        this.CreatePurchLine(OrderJsonObject, PurchaseHeader)
-                end
-            end
-        end else
-            exit
+        if ImportToken.IsObject then begin // Check if the input token is an object
+            OrderArray := ImportToken.AsArray(); // Convert the token to a JSON array
+            foreach OrderToken in OrderArray do begin // Iterate through each order in the 'Orders' array
+                OrderObject := OrderToken.AsObject(); // Convert the token to a JSON object
+                Clear(PurchaseHeader);
+                if this.CreatePurchHeader(OrderObject, PurchaseHeader) then
+                    this.CreatePurchLine(OrderObject, PurchaseHeader);
+            end;
+        end;
     end;
 
     local procedure CreatePurchHeader(OrderObject: JsonObject; PurchaseHeader: Record "Purchase Header"): Boolean
     var
         VendorNo: Code[20];
         OrderDate: Date;
-        ValueJsonToken: JsonToken;
+        ValueToken: JsonToken;
     begin
-        if OrderObject.Get('Order Date', ValueJsonToken) then // Check if the JSON object contains 'Order Date'
-            OrderDate := ValueJsonToken.AsValue().AsDate(); // Get the order date from the JSON object
-        if OrderObject.Get('Buy from Vendor No.', ValueJsonToken) then // Check if the JSON object contains 'Buy from Vendor No.'
-            VendorNo := CopyStr(ValueJsonToken.AsValue().AsCode(), 1, 20); // Get the vendor number from the JSON object
+        if OrderObject.Get('Order Date', ValueToken) then // Check if the object contains 'Order Date'
+            OrderDate := ValueToken.AsValue().AsDate(); // Get the order date from the object
+        if OrderObject.Get('Buy from Vendor No.', ValueToken) then // Check if the object contains 'Buy from Vendor No.'
+            VendorNo := CopyStr(ValueToken.AsValue().AsCode(), 1, 20); // Get the vendor number from the object
 
         PurchaseHeader.Init();
         PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Order;
@@ -73,23 +69,23 @@ codeunit 51002 KNHImportFromJson
         ItemNo: Code[20];
         OrderDate: Date;
         LineQty: Decimal;
-        LineJsonObject: JsonObject;
+        LineObject: JsonObject;
         LineArrayToken: JsonToken;
         LineToken: JsonToken;
-        ValueJsonToken: JsonToken;
+        ValueToken: JsonToken;
     begin
         if not OrderObject.Contains('Lines') then // Check if the JSON object contains 'Lines'
             exit // Exit if 'Lines' is not present in the JSON object
         else
             if OrderObject.Get('Lines', LineArrayToken) then // Get the 'Lines' array from the JSON object
                 foreach LineToken in LineArrayToken.AsArray() do begin // Iterate through each line in the 'Lines' array
-                    LineJsonObject := LineToken.AsObject(); // Convert the token to a JSON object
-                    if OrderObject.Get('Order Date', ValueJsonToken) then // Check if the JSON object contains 'Order Date'
-                        OrderDate := ValueJsonToken.AsValue().AsDate(); // Get the order date
-                    if OrderObject.Get('No.', ValueJsonToken) then // Check if the JSON object contains 'No.'
-                        ItemNo := CopyStr(ValueJsonToken.AsValue().AsCode(), 1, 20); // Get the item number from the JSON object
-                    if OrderObject.Get('Quantity', ValueJsonToken) then // Check if the JSON object contains 'Quantity'
-                        LineQty := ValueJsonToken.AsValue().AsDecimal(); // Get the line quantity from the JSON object
+                    LineObject := LineToken.AsObject(); // Convert the token to a JSON object
+                    if OrderObject.Get('Order Date', ValueToken) then // Check if the JSON object contains 'Order Date'
+                        OrderDate := ValueToken.AsValue().AsDate(); // Get the order date
+                    if OrderObject.Get('No.', ValueToken) then // Check if the JSON object contains 'No.'
+                        ItemNo := CopyStr(ValueToken.AsValue().AsCode(), 1, 20); // Get the item number from the JSON object
+                    if OrderObject.Get('Quantity', ValueToken) then // Check if the JSON object contains 'Quantity'
+                        LineQty := ValueToken.AsValue().AsDecimal(); // Get the line quantity from the JSON object
 
                     PurchaseLine.Init();
                     PurchaseLine."Document Type" := PurchaseLine."Document Type"::Order;
@@ -102,8 +98,8 @@ codeunit 51002 KNHImportFromJson
                     PurchaseLine.Validate(Quantity, LineQty);
                     PurchaseLine.Modify(true);
 
-                    if LineJsonObject.Contains('comment') then // Check if the line object contains 'comment'
-                        this.GetPurchComments(LineJsonObject, PurchaseLine) // Get the purchase comments from the line object
+                    if LineObject.Contains('comment') then // Check if the line object contains 'comment'
+                        this.GetPurchComments(LineObject, PurchaseLine) // Get the purchase comments from the line object
                 end
     end;
 

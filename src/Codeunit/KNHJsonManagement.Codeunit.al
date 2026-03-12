@@ -3,15 +3,15 @@ namespace JsonExamples;
 using Microsoft.Sales.Customer;
 using System.Text;
 
-codeunit 51000 "KNH Json Management"
+codeunit 51000 KNHJsonManagement
 {
     procedure ReadJson(JsonObjectText: Text)
     var
         Customer: Record Customer; //18
         ShipToAddress: Record "Ship-to Address"; //222
-        ArrayJSONManagement: Codeunit "Json Management";
-        GenJsonManagement: Codeunit "Json Management"; //5459
-        ObjectJsonManagement: Codeunit "Json management";
+        ArrayJSONManagement: Codeunit "JSON Management";
+        GenJsonManagement: Codeunit "JSON Management"; //5459
+        ObjectJsonManagement: Codeunit "JSON Management";
         I: Integer;
         CodeText: Text;
         CustomerJsonObject: Text;
@@ -26,21 +26,21 @@ codeunit 51000 "KNH Json Management"
             ObjectJsonManagement.GetStringPropertyValueByName('No', CodeText); //Get the 'No' property from the JSON object
             Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."No."))); //Validate the 'No' field
             ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText); //Get the 'Address' property from the JSON object
-            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer."Address"))); //Validate the 'Address' field
+            Customer.Validate("No.", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(Customer.Address))); //Validate the 'Address' field
             Customer.Insert(); //Insert the Customer record
 
             GenJsonManagement.InitializeObject(CustomerJsonObject); //Re-initialize the Customer JSON object to extract more properties
             if ObjectJsonManagement.GetStringPropertyValueByName('Ship-to', JsonArrayText) then begin //Get the 'Ship-to' array from the JSON object
                 ObjectJsonManagement.InitializeCollection(JsonArrayText); //Initialize the collection from the JSON array
-                for I := 1 to ArrayJsonManagement.GetCollectionCount() do begin //Loop through each item in the collection
-                    ArrayJSONManagement.GetObjectFromCollectionByIndex(ShipToJsonObject, i); //Get the Ship-to JSON object by index
+                for I := 1 to ArrayJSONManagement.GetCollectionCount() do begin //Loop through each item in the collection
+                    ArrayJSONManagement.GetObjectFromCollectionByIndex(ShipToJsonObject, I); //Get the Ship-to JSON object by index
 
                     ShipToAddress.Init(); //Initialize the Ship-to Address record
                     ShipToAddress.Validate("Customer No.", Customer."No."); //Validate the 'Customer No.' field
                     ObjectJsonManagement.GetStringPropertyValueByName('Code', CodeText); //Get the 'Code' property from the JSON object
                     ShipToAddress.Validate("Code", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Code))); //Validate the 'Code' field
                     ObjectJsonManagement.GetStringPropertyValueByName('Address', CodeText); //Get the 'Address' property from the JSON object
-                    ShipToAddress.Validate("Address", CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Address))); //Validate the 'Address' field
+                    ShipToAddress.Validate(Address, CopyStr(CodeText.ToUpper(), 1, MaxStrLen(ShipToAddress.Address))); //Validate the 'Address' field
                     ShipToAddress.Insert(); //Insert the Ship-to Address record
                 end;
             end;
@@ -60,16 +60,16 @@ codeunit 51000 "KNH Json Management"
         RecordRef: RecordRef;
         FieldRef: FieldRef;
         FieldHash: Dictionary of [Text, Integer];
+        I: Integer;
         ResponseToken: JsonToken;
         ResponseValue: JsonValue;
-        RecVariant: Variant;
         ResponseKey: Text;
-        I: Integer;
+        RecVariant: Variant;
     begin
         RecordRef.Open(TableNo);
         for I := 1 to RecordRef.FieldCount() do begin //Loop for each field in ref record
-            FieldRef := RecordRef.FieldIndex(i);
-            FieldHash.Add(this.GetJsonFieldName(fieldRef), fieldRef.Number);
+            FieldRef := RecordRef.FieldIndex(I);
+            FieldHash.Add(this.GetJsonFieldName(FieldRef), FieldRef.Number);
         end;
         RecordRef.Init();
         foreach ResponseKey in ResponseObject.Keys() do //Loop for each field in json object
@@ -77,7 +77,7 @@ codeunit 51000 "KNH Json Management"
                 if ResponseToken.IsValue() then begin //Check json token has value
                     ResponseValue := ResponseToken.AsValue(); //Convert json token to json value
                     FieldRef := RecordRef.Field(FieldHash.Get(ResponseKey)); //Place key value in fieldref
-                    this.AssignValueToFieldRef(fieldRef, ResponseValue); //Convert json value to fieldref
+                    this.AssignValueToFieldRef(FieldRef, ResponseValue); //Convert json value to fieldref
                 end;
         RecVariant := RecordRef;
         exit(RecVariant); //Return variant 
@@ -87,10 +87,10 @@ codeunit 51000 "KNH Json Management"
     var
         RecordRef: RecordRef;
         FieldRef: FieldRef;
-        SendObject: JsonObject;
         I: Integer;
+        SendObject: JsonObject;
     begin
-        if not variantRec.IsRecord then
+        if not VariantRec.IsRecord then
             Error('Parameter Rec is not a record');
         RecordRef.GetTable(VariantRec);
         for I := 1 to RecordRef.FieldCount() do begin //Loop for each field
@@ -110,9 +110,9 @@ codeunit 51000 "KNH Json Management"
 
     local procedure FieldRef2JsonValue(FieldRef: FieldRef): JsonValue //receive var and return json value
     var
-        ResponseValue: JsonValue;
         TempDate: Date;
         TempDateTime: DateTime;
+        ResponseValue: JsonValue;
         TempTime: Time;
     begin
         case FieldRef.Type() of
@@ -139,13 +139,13 @@ codeunit 51000 "KNH Json Management"
 
     local procedure GetJsonFieldName(FieldRef: FieldRef): Text //Receive fieldref and return text variable
     var
-        Name: Text;
         I: Integer;
+        Name: Text;
     begin
         Name := FieldRef.Name(); //Place fieldref name in text variable
-        for I := 1 to Strlen(Name) do //For each char in name
-            if Name[i] < '0' then
-                Name[i] := '_'; //Convert char less than 0
+        for I := 1 to StrLen(Name) do //For each char in name
+            if Name[I] < '0' then
+                Name[I] := '_'; //Convert char less than 0
         exit(Name.Replace('__', '_').TrimEnd('_').TrimStart('_')); //Change name
     end;
 

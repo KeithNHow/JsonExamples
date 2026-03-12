@@ -1,16 +1,16 @@
 namespace JsonExamples;
 
-codeunit 51001 "KNH Json Loop Import"
+codeunit 51001 KNHJsonLoopImport
 {
     procedure ImportRecords(Txtresponse: Text) //Receive response
     var
-        KNHImportFile: Record "KNH Import File";
-        ResponseObject: JsonObject;
-        ResponseValue: JsonValue;
-        ResponseToken: JsonToken;
-        ResponseKey: Text;
+        KNHImportFile: Record KNHImportFile;
         RecCount: Integer;
+        ResponseObject: JsonObject;
+        ResponseToken: JsonToken;
+        ResponseValue: JsonValue;
         RecordsCountedMsg: Label 'Records imported = %1', Comment = '%1 = Record Count';
+        ResponseKey: Text;
     begin
         KNHImportFile.Reset();
         if KNHImportFile.FindLast() then
@@ -18,7 +18,7 @@ codeunit 51001 "KNH Json Loop Import"
         else
             RecCount := 1;
 
-        if ResponseToken.ReadFrom(txtResponse) then //Read text into json token
+        if ResponseToken.ReadFrom(Txtresponse) then //Read text into json token
             if ResponseToken.IsObject() then begin //Check json token contains a Json object
                 ResponseObject := ResponseToken.AsObject(); //Convert json token into json object
 

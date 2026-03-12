@@ -2,7 +2,7 @@
 
 namespace JsonExamples;
 
-page 51001 "KNH Get Fact"
+page 51001 KNHGetFact
 {
     Caption = 'Get Fact';
     PageType = Card;
@@ -69,13 +69,13 @@ page 51001 "KNH Get Fact"
     var
         HttpClient: HttpClient;
         HttpResponseMessage: HttpResponseMessage;
-        DogJsonToken: JsonToken;
-        BreedJsonToken: JsonToken;
-        DogJsonObject: JsonObject;
-        BreedJsonObject: JsonObject;
-        ResponseTxt: Text;
-        Identity: Text;
         Counter: Integer;
+        BreedJsonObject: JsonObject;
+        DogJsonObject: JsonObject;
+        BreedJsonToken: JsonToken;
+        DogJsonToken: JsonToken;
+        Identity: Text;
+        ResponseTxt: Text;
     begin
         Counter := 0;
         if (HttpClient.Get('https://dogapi.dog/api/v2/breeds', HttpResponseMessage)) //Get Response from path

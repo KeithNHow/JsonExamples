@@ -1,17 +1,14 @@
 namespace JsonExamples;
 using Microsoft.Purchases.Document;
 
-pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
+pageextension 51000 KNHPurchaseOrderList extends "Purchase Order List"
 {
     actions
     {
-        addlast(Processing)
+        addlast(processing)
         {
             group(JsonExamples)
             {
-                Caption = 'Transfers';
-                Image = Transactions;
-
                 action("Export Purchase Orders")
                 {
                     ToolTip = 'This action is for exporting the purchase orders as Json.';
@@ -19,7 +16,7 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
                     Image = Export;
                     trigger OnAction()
                     var
-                        ExportToJson: Codeunit "KNH Export To Json";
+                        ExportToJson: Codeunit KNHExportToJson;
                     begin
                         ExportToJson.ExportPurchOrderToJsonFile(Rec);
                     end;
@@ -31,7 +28,7 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
                     Image = Import;
                     trigger OnAction()
                     var
-                        ImportFromJson: Codeunit "KNH Import From Json";
+                        ImportFromJson: Codeunit KNHImportFromJson;
                     begin
                         ImportFromJson.ImportPurchOrderFromJsonFile();
                     end;
@@ -43,8 +40,9 @@ pageextension 51000 "KNH Purchase Order List" extends "Purchase Order List"
             group(JsonExamples_Promoted)
             {
                 Caption = 'Transfers';
-                actionref("Export_Promoted_Ref"; "Export Purchase Orders") { }
-                actionref("Import_Promoted_Ref"; "Import Purchase Orders") { }
+                Image = Transactions;
+                actionref(Export_Promoted_Ref; "Export Purchase Orders") { }
+                actionref(Import_Promoted_Ref; "Import Purchase Orders") { }
             }
         }
     }

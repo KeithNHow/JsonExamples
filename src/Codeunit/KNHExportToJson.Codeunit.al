@@ -3,13 +3,13 @@ using Microsoft.Purchases.Document;
 using Microsoft.Purchases.Comment;
 using System.Utilities;
 
-codeunit 51004 "KNH Export To Json"
+codeunit 51004 KNHExportToJson
 {
     procedure ExportPurchOrderToJsonFile(PurchaseHeader: Record "Purchase Header")
     var
         Tempblob: Codeunit "Temp Blob";
-        PurchOrderJsonObject: JsonObject;
         InStream: InStream;
+        PurchOrderJsonObject: JsonObject;
         OutStream: OutStream;
         ExportFileName: Text;
     begin

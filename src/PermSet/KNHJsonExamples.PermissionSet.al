@@ -1,12 +1,12 @@
-permissionset 51000 "KNH Json Examples"
+permissionset 51000 KNHJsonExamples
 {
     Assignable = true;
     Caption = 'Json Tools', MaxLength = 30;
     Permissions =
-        codeunit "KNH Json Management" = X,
-        codeunit "KNH Json Loop Import" = X,
-        tabledata "KNH Import File" = RIMD,
-        table "KNH Import File" = X,
-        page "KNH Import File" = X,
-        page "KNH Get Fact" = X;
+        codeunit KNHJsonManagement = X,
+        codeunit KNHJsonLoopImport = X,
+        tabledata KNHImportFile = RIMD,
+        table KNHImportFile = X,
+        page KNHImportFile = X,
+        page KNHGetFact = X;
 }

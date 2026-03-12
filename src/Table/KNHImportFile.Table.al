@@ -1,9 +1,10 @@
 namespace JsonExamples;
 
-table 51000 "KNH Import File"
+table 51000 KNHImportFile
 {
     Caption = 'Import File';
     DataClassification = CustomerContent;
+    AllowInCustomizations = AsReadWrite;
 
     fields
     {

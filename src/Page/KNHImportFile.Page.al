@@ -2,12 +2,12 @@
 
 namespace JsonExamples;
 
-page 51000 "KNH Import File"
+page 51000 KNHImportFile
 {
     ApplicationArea = All;
     Caption = 'Imported Records';
     PageType = List;
-    SourceTable = "KNH Import File";
+    SourceTable = KNHImportFile;
     UsageCategory = Lists;
     RefreshOnActivate = true;
 
@@ -51,10 +51,10 @@ page 51000 "KNH Import File"
 
                 trigger OnAction()
                 var
-                    KNHJsonLoopImport: Codeunit "KNH Json Loop Import";
+                    KNHJsonLoopImport: Codeunit KNHJsonLoopImport;
+                    WebClient: HttpClient;
                     WebHeaders: HttpHeaders;
                     HttpResponseMsg: HttpResponseMessage;
-                    WebClient: HttpClient;
                     Response: Text;
                 begin
                     WebHeaders := WebClient.DefaultRequestHeaders; //Gets request hdrs sent with each request
@@ -77,9 +77,9 @@ page 51000 "KNH Import File"
                 trigger OnAction()
                 var
                     MyInStream: InStream;
-                    MyFile: Text;
-                    FromFolder: Text;
                     FromFilter: Text;
+                    FromFolder: Text;
+                    MyFile: Text;
                     MyText: Text;
                     Title: Text;
                 begin

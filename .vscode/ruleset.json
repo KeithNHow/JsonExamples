@@ -5,6 +5,11 @@
             "id": "AA0072",
             "action": "Hidden",
             "description": "Warning the name of variables and parameters must be suffixed with the type or object name."
-        }
+        },
+        {
+            "id": "AW0006",
+            "action": "Hidden",
+            "description": "The page requires use the UsageCategory and ApplicationArea properties to be searchable."
+        }      
     ]
 }

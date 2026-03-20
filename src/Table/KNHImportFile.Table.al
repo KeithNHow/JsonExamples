@@ -1,4 +1,7 @@
-namespace JsonExamples;
+///<summary>
+/// This is a table that defines the structure of the data for imported files. It has three fields: ID, AccessToken, and ExpiresIn. The ID field is an auto-incrementing integer that serves as the primary key. The AccessToken field is a text field that can store up to 100 characters, and the ExpiresIn field is a text field that can store up to 20 characters. This table allows for storing information about imported files, such as access tokens and their expiration times.
+///</summary>
+namespace KNHJsonExamples;
 
 table 51000 KNHImportFile
 {

@@ -1,4 +1,7 @@
-namespace JsonExamples;
+///<summary>
+///This codeunit demonstrates how to import records from a JSON file.
+///</summary>
+namespace KNHJsonExamples;
 
 codeunit 51001 KNHJsonLoopImport
 {

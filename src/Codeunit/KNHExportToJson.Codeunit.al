@@ -1,4 +1,7 @@
-namespace JsonExamples;
+///<summary>
+///This codeunit demonstrates how to export a purchase order with its lines and line comments to a JSON file.
+///</summary>
+namespace KNHJsonExamples;
 using Microsoft.Purchases.Document;
 using Microsoft.Purchases.Comment;
 using System.Utilities;

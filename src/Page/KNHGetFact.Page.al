@@ -1,6 +1,9 @@
-// Pop field with IP Address by calling GetIP func
-
-namespace JsonExamples;
+///<summary>
+/// This page 'Get Fact' demonstrates how to call a REST API and read the JSON response. 
+/// The 'Get A Fact' procedure is called from the page layout. It calls an API that returns a random cat fact.
+/// the 'Get A Villain' procedure calls an API that returns a list of dog breeds and counts them.
+///</summary>
+namespace KNHJsonExamples;
 
 page 51001 KNHGetFact
 {
@@ -78,19 +81,18 @@ page 51001 KNHGetFact
         ResponseTxt: Text;
     begin
         Counter := 0;
-        if (HttpClient.Get('https://dogapi.dog/api/v2/breeds', HttpResponseMessage)) //Get Response from path
-        and (HttpResponseMessage.IsSuccessStatusCode()) then begin
+        if HttpClient.Get('https://dogapi.dog/api/v2/breeds', HttpResponseMessage)
+        and HttpResponseMessage.IsSuccessStatusCode() then begin
             HttpResponseMessage.Content().ReadAs(ResponseTxt); //move content of http response into text variable 
             DogJsonObject.ReadFrom(ResponseTxt); //read text into json object
-            if (DogJsonObject.Contains('data'))
-            and (DogJsonObject.Get('data', DogJsonToken)) then //copy JsonObject property into jsontoken    
+            if DogJsonObject.Contains('data') and DogJsonObject.Get('data', DogJsonToken) then
                 foreach DogJsonToken in DogJsonToken.AsArray() do begin //loop through json Objects 
                     Counter += 1;
                     BreedJsonObject := DogJsonToken.AsObject();
                     if BreedJsonObject.Get('id', BreedJsonToken) then
                         Identity := BreedJsonToken.AsValue().AsText();
                 end;
-            exit(Counter);
+            Message('Imported records: %1', Counter);
         end;
     end;
 }

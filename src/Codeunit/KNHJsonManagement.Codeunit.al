@@ -1,5 +1,8 @@
-// Procedures - ReadJson, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
-namespace JsonExamples;
+///<summary>
+///Procedures - ReadJson, Json2Rec, Rec2Json, FieldRef2JsonValue, GetJsonFieldName, AssignValueToFieldRef
+///This codeunit demonstrates how to read a JSON object, convert JSON to record and record to JSON, and assign values to field references.
+///</summary>
+namespace KNHJsonExamples;
 using Microsoft.Sales.Customer;
 using System.Text;
 

@@ -1,4 +1,7 @@
-namespace JsonExamples;
+/// <summary>
+/// This is a page extension of the standard "Purchase Order List" page. It adds two actions to the processing group, one for exporting purchase orders as Json files and another for importing purchase orders from Json files. The export action calls a codeunit that handles the logic for exporting the purchase orders, while the import action calls a codeunit that handles the logic for importing the purchase orders. Additionally, both actions are also added to the promoted actions group for easier access.
+/// </summary>
+namespace KNHJsonExamples;
 using Microsoft.Purchases.Document;
 
 pageextension 51000 KNHPurchaseOrderList extends "Purchase Order List"

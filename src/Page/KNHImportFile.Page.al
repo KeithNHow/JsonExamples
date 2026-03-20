@@ -1,6 +1,9 @@
-// Actions (2) - Get API data, Get API Data 2 
-
-namespace JsonExamples;
+/// <summary>
+/// This is a list page that shows records of the table "KNHImportFile". It has two actions, one to get data from an API and another to get data from an external file. 
+/// The first action uses the HttpClient class to send a GET request to a specified URL with custom headers and reads the response content as text. 
+/// The second action allows the user to upload a file, reads its content into a text variable, and displays it in a message box.
+/// </summary>
+namespace KNHJsonExamples;
 
 page 51000 KNHImportFile
 {
